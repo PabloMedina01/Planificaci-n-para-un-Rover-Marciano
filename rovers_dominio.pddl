@@ -1,6 +1,8 @@
-(define (domain Rover)
+(define (domain Rover-battery)
 (:requirements :typing :strips)
-(:types rover waypoint store camera mode lander objective)
+(:types rover waypoint store camera mode lander objective
+       blevel battery
+)
 
 (:predicates (at ?x - rover ?y - waypoint) 
              (at_lander ?x - lander ?y - waypoint)
@@ -27,40 +29,61 @@
 	     (calibration_target ?i - camera ?o - objective)
 	     (on_board ?i - camera ?r - rover)
 	     (channel_free ?l - lander)
+            (battery_installed ?r - rover ?b - battery ?bmax ?bcur - blevel)
+	     (lower ?l1 ?l2 - blevel)
 
 )
 
 	
-(:action navigate
-:parameters (?x - rover ?y - waypoint ?z - waypoint) 
-:precondition (and (can_traverse ?x ?y ?z) (available ?x) (at ?x ?y) 
+(:action navigate-bat
+:parameters (?r - rover ?y - waypoint ?z - waypoint
+              ?b - battery ?bmax ?bcur ?bnext - blevel
+) 
+:precondition (and (can_traverse ?r ?y ?z) (available ?r) (at ?r ?y) 
                 (visible ?y ?z)
+                (battery_installed ?r ?b ?bmax ?bcur)
+                (lower ?bnext ?bcur)
 	    )
-:effect (and (not (at ?x ?y)) (at ?x ?z)
+:effect (and (not (at ?r ?y)) (at ?r ?z)
+             (not (battery_installed ?r ?b ?bmax ?bcur) )
+             (battery_installed ?r ?b ?bmax ?bnext)
+		)
+)
+
+(:action recharge
+:parameters (?r - rover ?l - lander ?w - waypoint
+              ?b - battery ?bmax ?bcur - blevel
+) 
+:precondition (and (at ?r ?w) (at_lander ?l ?w)
+                (battery_installed ?r ?b ?bmax ?bcur)
+	    )
+:effect (and 
+             (not (battery_installed ?r ?b ?bmax ?bcur) )
+             (battery_installed ?r ?b ?bmax ?bmax)
 		)
 )
 
 (:action sample_soil
-:parameters (?x - rover ?s - store ?p - waypoint)
-:precondition (and (at ?x ?p) (at_soil_sample ?p) (equipped_for_soil_analysis ?x) (store_of ?s ?x) (empty ?s)
+:parameters (?r - rover ?s - store ?p - waypoint)
+:precondition (and (at ?r ?p) (at_soil_sample ?p) (equipped_for_soil_analysis ?r) (store_of ?s ?r) (empty ?s)
 		)
-:effect (and (not (empty ?s)) (full ?s) (have_soil_analysis ?x ?p) (not (at_soil_sample ?p))
+:effect (and (not (empty ?s)) (full ?s) (have_soil_analysis ?r ?p) (not (at_soil_sample ?p))
 		)
 )
 
 (:action sample_rock
-:parameters (?x - rover ?s - store ?p - waypoint)
-:precondition (and (at ?x ?p) (at_rock_sample ?p) (equipped_for_rock_analysis ?x) (store_of ?s ?x)(empty ?s)
+:parameters (?r - rover ?s - store ?p - waypoint)
+:precondition (and (at ?r ?p) (at_rock_sample ?p) (equipped_for_rock_analysis ?r) (store_of ?s ?r)(empty ?s)
 		)
-:effect (and (not (empty ?s)) (full ?s) (have_rock_analysis ?x ?p) (not (at_rock_sample ?p))
+:effect (and (not (empty ?s)) (full ?s) (have_rock_analysis ?r ?p) (not (at_rock_sample ?p))
 		)
 )
 
 (:action drop
-:parameters (?x - rover ?y - store)
-:precondition (and (store_of ?y ?x) (full ?y)
+:parameters (?r - rover ?s - store)
+:precondition (and (store_of ?s ?r) (full ?s)
 		)
-:effect (and (not (full ?y)) (empty ?y)
+:effect (and (not (full ?s)) (empty ?s)
 	)
 )
 
