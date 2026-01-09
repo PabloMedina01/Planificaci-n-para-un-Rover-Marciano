@@ -1,4 +1,4 @@
-(define (problem roverprob1234) (:domain Rover)
+(define (problem roverprob1234) (:domain Rover-battery)
 (:objects
 	general - Lander
 	colour high_res low_res - Mode
@@ -7,6 +7,8 @@
 	waypoint0 waypoint1 waypoint2 waypoint3 - Waypoint
 	camera0 - Camera
 	objective0 objective1 - Objective
+    b0 b1 b2 b3 b4 b5 - Blevel
+    bat0 - Battery
 	)
 (:init
 	(visible waypoint1 waypoint0)
@@ -46,6 +48,11 @@
 	(calibration_target camera0 objective1)
 	(supports camera0 colour)
 	(supports camera0 high_res)
+	; Bateria cargada en rover 0
+	(battery_installed rover0 bat0 b4 b4)
+	; Niveles de bateria
+	(lower b0 b1) (lower b1 b2) (lower b2 b3) (lower b3 b4) (lower b4 b5)
+	; Visibilidad de objetivos
 	(visible_from objective0 waypoint0)
 	(visible_from objective0 waypoint1)
 	(visible_from objective0 waypoint2)
@@ -53,13 +60,12 @@
 	(visible_from objective1 waypoint0)
 	(visible_from objective1 waypoint1)
 	(visible_from objective1 waypoint2)
-	(visible_from objective1 waypoint3)
 )
 
 (:goal (and
-(communicated_soil_data waypoint2)
-(communicated_rock_data waypoint3)
-(communicated_image_data objective1 high_res)
-	)
+   (communicated_soil_data waypoint2)
+   (communicated_rock_data waypoint3)
+   (communicated_image_data objective1 high_res)
+   )
 )
 )
