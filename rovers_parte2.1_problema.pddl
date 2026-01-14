@@ -1,13 +1,8 @@
-;; PROBLEMA 2.1: Nuevo Waypoint con Muestras Múltiples
-;; CAMBIOS RESPECTO AL PROBLEMA ORIGINAL:
-;; 1. Se añade waypoint4 (línea 8) conectado a waypoint1 y waypoint2
-;; 2. waypoint4 contiene muestras de suelo y roca (líneas 39-40)
-;; 3. Se definen rutas de traversal a/desde waypoint4 (líneas 57-59)
-;; 4. Se añaden objetivos para comunicar ambas muestras de waypoint4 (líneas 83-84)
-;; 5. Se añade objetivo para que rover0 termine en waypoint1 (línea 86)
 
-(define (problem rovers_parte2.1) (:domain Rover-battery)
-(:objects
+
+(define (problem rovers_parte2_1)
+  (:domain Rover-battery)
+  (:objects
     general - Lander
     colour high_res low_res - Mode
     rover0 - Rover

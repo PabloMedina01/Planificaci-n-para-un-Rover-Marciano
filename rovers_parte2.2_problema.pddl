@@ -1,15 +1,7 @@
-;; PROBLEMA 2.2: Segundo Rover con Colaboración Paralela
-;; CAMBIOS RESPECTO AL PROBLEMA ORIGINAL:
-;; 1. Se añade rover1 (línea 5) con identificador rover1
-;; 2. Se añade store para rover1: rover1store (línea 6)
-;; 3. Se añade camera1 para rover1 (línea 8) calibrada con objective0
-;; 4. Se añade batería bat1 para rover1 (línea 11)
-;; 5. rover1 tiene capacidades completas de movimiento, análisis e imaging (líneas 64-78)
-;; 6. rover1 iniciado en waypoint0 con batería nivel b4
-;; 7. Se definen rutas específicas para rover1 diferente de rover0
-;; 8. Se expanden los objetivos a 10 (4 imágenes + 3 muestras suelo + 3 muestras roca)
 
-(define (problem rovers_parte2.2) (:domain Rover-battery)
+
+(define (problem rovers_parte2_2)
+    (:domain Rover-battery)
 (:objects
     general - Lander
     colour high_res low_res - Mode
