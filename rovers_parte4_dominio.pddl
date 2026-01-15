@@ -71,7 +71,7 @@
     ; - Solo r1 gasta bateria.
     ; - r2 se mueve aunque no tenga capacidad para ese terreno.
     (:action navigate-tow
-        :parameters (?r1 - rover ?r2 - rover ?y - waypoint ?z - waypoint ?b - battery ?bmax ?bcur ?bnext - blevel ?t - terrain ?tr - traction
+        :parameters (?r1 - rover ?r2 - rover ?y - waypoint ?z - waypoint ?b - battery ?bmax ?bcur ?bnext - blevel ?t - terrain ?tr - traction ?tr2 - traction
         )
         :precondition (and
             (not (= ?r1 ?r2))
@@ -79,11 +79,14 @@
             (traverse_type ?y ?z ?t) ; Tipo de terreno del camino
             (has_traction ?r1 ?tr) ; r1 tiene traccion
             (suitable ?tr ?t) ; r1 SI PUEDE cruzar el terreno
-            (available ?r1) (available ?r2)
+            (has_traction ?r2 ?tr2) ; r2 tiene traccion
+            (not (suitable ?tr2 ?t)) ; r2 NO PUEDE cruzar el terreno
+            (available ?r1)
+            (available ?r2)
             (visible ?y ?z)
-            (battery_installed ?r1 ?b ?bmax ?bcur) ; Bateria de r1
-            (lower ?bnext ?bcur)
+            (battery_installed ?r1 ?b ?bmax ?bcur) ; Bateria de r1 (lower ?bnext ?bcur)
         )
+
         :effect (and
             (not (at ?r1 ?y)) (at ?r1 ?z) ; r1 se mueve
             (not (at ?r2 ?y)) (at ?r2 ?z) ; r2 es arrastrado
@@ -92,7 +95,6 @@
             ; La bateria de r2 no cambia
         )
     )
-
     (:action recharge
         :parameters (?r - rover ?l - lander ?w - waypoint ?b - battery ?bmax ?bcur - blevel
         )
@@ -182,5 +184,4 @@
             (not (channel_free ?l))(channel_free ?l)(communicated_image_data ?o ?m)(available ?r)
         )
     )
-
 )
