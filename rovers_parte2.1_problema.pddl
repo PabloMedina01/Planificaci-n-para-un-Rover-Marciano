@@ -1,11 +1,10 @@
 ;; PROBLEMA 2.1: Nuevo Waypoint con Muestras Multiples
 ;; CAMBIOS RESPECTO AL PROBLEMA ORIGINAL:
-;; 1. Se anade waypoint4 (linea 8) conectado a waypoint1 y waypoint2
-;; 2. waypoint4 contiene muestras de suelo y roca (lineas 39-40)
-;; 3. Se definen rutas de traversal a/desde waypoint4 (lineas 57-59)
-;; 4. Se anaden objetivos para comunicar ambas muestras de waypoint4 (lineas 83-84)
-;; 5. Se anade objetivo para que rover0 termine en waypoint1 (linea 86)
-
+;; 1. Se anade waypoint4 conectado a waypoint1 y waypoint2
+;; 2. waypoint4 contiene muestras de suelo y roca 
+;; 3. Se definen rutas de traversal a/desde waypoint4 
+;; 4. Se anaden objetivos para comunicar ambas muestras de waypoint4 
+;; 5. Se anade objetivo para que rover0 termine en waypoint1
 (define (problem rovers_parte_2_1)
     (:domain Rover-battery)
     (:objects

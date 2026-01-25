@@ -1,10 +1,10 @@
 ;; PROBLEMA 2.2: Segundo Rover con Colaboracion Paralela
 ;; CAMBIOS RESPECTO AL PROBLEMA ORIGINAL:
-;; 1. Se anade rover1 (linea 5) con identificador rover1
-;; 2. Se anade store para rover1: rover1store (linea 6)
-;; 3. Se anade camera1 para rover1 (linea 8) calibrada con objective0
-;; 4. Se anade bateria bat1 para rover1 (linea 11)
-;; 5. rover1 tiene capacidades completas de movimiento, analisis e imaging (lineas 64-78)
+;; 1. Se anade rover1 con identificador rover1
+;; 2. Se anade store para rover1: rover1store 
+;; 3. Se anade camera1 para rover1 calibrada con objective0
+;; 4. Se anade bateria bat1 para rover1 
+;; 5. rover1 tiene capacidades completas de movimiento, analisis e imaging 
 ;; 6. rover1 iniciado en waypoint0 con bateria nivel b4
 ;; 7. Se definen rutas especificas para rover1 diferente de rover0
 ;; 8. Se expanden los objetivos a 10 (4 imagenes + 3 muestras suelo + 3 muestras roca)
@@ -103,7 +103,7 @@
         (lower b4 b5)
 
         ;; Definicion de visibilidad de objetivos desde cada waypoint
-        ;; Permite que los rovers capturen imágenes desde diferentes ubicaciones
+        ;; Permite que los rovers capturen imagenes desde diferentes ubicaciones
         (visible_from objective0 waypoint0)
         (visible_from objective0 waypoint1)
         (visible_from objective0 waypoint2)
@@ -124,7 +124,7 @@
             (communicated_rock_data waypoint1)
             (communicated_rock_data waypoint2)
             (communicated_rock_data waypoint3)
-            ;; CAMBIO 2.5: Imágenes de todos los objetivos en ambos modos
+            ;; CAMBIO 2.5: Imagenes de todos los objetivos en ambos modos
             ;; objective0 capturada por rover1 (camera1), objective1 por rover0 (camera0)
             ;; Ambos en modo colour y high_res
             (communicated_image_data objective0 colour)
